@@ -1,0 +1,1665 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&family=Italianno&family=Libre+Baskerville:wght@400;700&family=Special+Elite&display=swap');
+
+:root {
+    --paper: #eee1c8;
+    --paper-light: #f8efd9;
+    --paper-dark: #d5bd98;
+    --ink: #38241f;
+    --brown: #70483a;
+    --deep-red: #702d2d;
+    --rose: #a64d50;
+    --dusty-rose: #b77b76;
+    --gold: #a27b48;
+    --shadow: rgba(42, 24, 19, 0.35);
+}
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(120, 71, 48, 0.18), transparent 25%),
+        radial-gradient(circle at 85% 80%, rgba(120, 71, 48, 0.16), transparent 25%),
+        linear-gradient(135deg, #2d1c18, #4b2d26 45%, #241714);
+    color: var(--ink);
+    font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+/* subtle vintage grain */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.13;
+    background-image:
+        repeating-radial-gradient(
+            circle at 0 0,
+            rgba(255,255,255,.4) 0,
+            rgba(255,255,255,.4) 1px,
+            transparent 1px,
+            transparent 4px
+        );
+    mix-blend-mode: soft-light;
+}
+
+/* =========================
+   OPENING SCREEN
+========================= */
+
+.opening-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 5000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(186, 121, 91, .25), transparent 28%),
+        radial-gradient(circle at 80% 75%, rgba(166, 77, 80, .2), transparent 30%),
+        #241714;
+    transition:
+        opacity 1s ease,
+        visibility 1s ease,
+        transform 1s ease;
+}
+
+.opening-screen.hide {
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(1.08);
+    pointer-events: none;
+}
+
+.opening-card {
+    position: relative;
+    width: min(560px, 92vw);
+    min-height: 650px;
+    padding: 70px 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+
+    background:
+        linear-gradient(rgba(255,255,255,.12), rgba(255,255,255,.03)),
+        repeating-linear-gradient(
+            0deg,
+            rgba(105, 66, 43, .05) 0px,
+            rgba(105, 66, 43, .05) 1px,
+            transparent 1px,
+            transparent 4px
+        ),
+        var(--paper);
+
+    box-shadow:
+        0 35px 80px rgba(0,0,0,.55),
+        inset 0 0 50px rgba(91,54,37,.15);
+
+    border: 1px solid rgba(90, 55, 40, .35);
+}
+
+.opening-card::before,
+.opening-card::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+}
+
+.opening-card::before {
+    inset: 14px;
+    border: 1px solid rgba(112,72,58,.5);
+}
+
+.opening-card::after {
+    inset: 23px;
+    border: 1px solid rgba(162,123,72,.3);
+}
+
+.opening-label {
+    position: relative;
+    z-index: 2;
+    font-family: "Special Elite", monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: var(--brown);
+    margin-bottom: 20px;
+}
+
+.opening-card h1 {
+    position: relative;
+    z-index: 2;
+    font-family: "Italianno", cursive;
+    font-size: clamp(80px, 14vw, 130px);
+    font-weight: 400;
+    line-height: .8;
+    color: var(--deep-red);
+    text-shadow: 2px 3px 0 rgba(83,43,34,.12);
+}
+
+.opening-ornament {
+    position: relative;
+    z-index: 2;
+    margin: 30px 0;
+    color: var(--gold);
+    font-size: 25px;
+    letter-spacing: 15px;
+}
+
+.opening-date {
+    position: relative;
+    z-index: 2;
+    font-family: "Libre Baskerville", serif;
+    font-size: 12px;
+    letter-spacing: 5px;
+    color: var(--brown);
+}
+
+.opening-description {
+    position: relative;
+    z-index: 2;
+    max-width: 360px;
+    margin: 25px auto 35px;
+    font-size: 18px;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+#openMagazine {
+    position: relative;
+    z-index: 2;
+    padding: 14px 35px;
+    border: 1px solid var(--brown);
+    background: var(--deep-red);
+    color: #f8ecd5;
+    font-family: "Special Elite", monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    cursor: pointer;
+    transition: .35s ease;
+    box-shadow: 4px 5px 0 rgba(70,40,30,.18);
+}
+
+#openMagazine:hover {
+    background: #4f2020;
+    transform: translateY(-3px) rotate(-1deg);
+}
+
+/* decorative petals */
+
+.petal {
+    position: absolute;
+    width: 14px;
+    height: 25px;
+    border-radius: 80% 20% 80% 20%;
+    background: rgba(132, 51, 52, .55);
+    transform: rotate(35deg);
+}
+
+.petal:nth-child(1) {
+    top: 9%;
+    left: 10%;
+}
+
+.petal:nth-child(2) {
+    top: 20%;
+    right: 12%;
+    transform: rotate(120deg);
+}
+
+.petal:nth-child(3) {
+    bottom: 16%;
+    left: 12%;
+    transform: rotate(-25deg);
+}
+
+.petal:nth-child(4) {
+    bottom: 12%;
+    right: 14%;
+    transform: rotate(70deg);
+}
+
+.rose-decoration {
+    position: absolute;
+    font-size: 50px;
+    opacity: .72;
+}
+
+.rose-decoration.top-left {
+    top: 38px;
+    left: 38px;
+}
+
+.rose-decoration.bottom-right {
+    bottom: 35px;
+    right: 38px;
+}
+
+/* =========================
+   MAGAZINE
+========================= */
+
+.magazine {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1s ease;
+}
+
+.magazine.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.book {
+    position: relative;
+    width: min(900px, 92vw);
+    height: min(650px, 88vh);
+    perspective: 2500px;
+}
+
+/* =========================
+   PAGES
+========================= */
+
+.page {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+
+    background:
+        radial-gradient(circle at 10% 20%, rgba(126,77,47,.11), transparent 20%),
+        radial-gradient(circle at 90% 85%, rgba(126,77,47,.1), transparent 25%),
+        repeating-linear-gradient(
+            0deg,
+            rgba(104,65,44,.035) 0px,
+            rgba(104,65,44,.035) 1px,
+            transparent 1px,
+            transparent 5px
+        ),
+        var(--paper);
+
+    border: 1px solid rgba(82, 50, 37, .38);
+
+    box-shadow:
+        0 18px 45px rgba(0,0,0,.42),
+        inset 0 0 70px rgba(92,58,39,.1);
+
+    transform-origin: left center;
+    transform-style: preserve-3d;
+
+    transition:
+        transform 1s cubic-bezier(.65,.05,.36,1),
+        box-shadow .7s ease;
+
+    backface-visibility: hidden;
+    cursor: default;
+}
+
+/* page stack */
+.page:nth-child(1) { z-index: 14; }
+.page:nth-child(2) { z-index: 13; }
+.page:nth-child(3) { z-index: 12; }
+.page:nth-child(4) { z-index: 11; }
+.page:nth-child(5) { z-index: 10; }
+.page:nth-child(6) { z-index: 9; }
+.page:nth-child(7) { z-index: 8; }
+.page:nth-child(8) { z-index: 7; }
+.page:nth-child(9) { z-index: 6; }
+.page:nth-child(10) { z-index: 5; }
+.page:nth-child(11) { z-index: 4; }
+.page:nth-child(12) { z-index: 3; }
+.page:nth-child(13) { z-index: 2; }
+.page:nth-child(14) { z-index: 1; }
+
+.page.flipped {
+    transform: rotateY(-180deg);
+    box-shadow: -10px 15px 30px rgba(0,0,0,.18);
+}
+
+/* inner page border */
+
+.page::before {
+    content: "";
+    position: absolute;
+    inset: 16px;
+    border: 1px solid rgba(102,65,49,.28);
+    pointer-events: none;
+    z-index: 20;
+}
+
+.page::after {
+    content: "";
+    position: absolute;
+    inset: 23px;
+    border: 1px dashed rgba(162,123,72,.18);
+    pointer-events: none;
+    z-index: 20;
+}
+
+/* =========================
+   COMMON PAGE CONTENT
+========================= */
+
+.page-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 55px;
+    z-index: 2;
+}
+
+.page-title {
+    font-family: "DM Serif Display", Georgia, serif;
+    font-size: clamp(32px, 5vw, 58px);
+    line-height: .95;
+    color: var(--deep-red);
+}
+
+.page-subtitle {
+    font-family: "Special Elite", monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: var(--brown);
+    text-transform: uppercase;
+}
+
+.handwritten {
+    font-family: "Italianno", cursive;
+}
+
+.small-caps {
+    font-family: "Libre Baskerville", serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* =========================
+   COVER
+========================= */
+
+.page-01 {
+    background:
+        linear-gradient(rgba(49,29,23,.1), rgba(49,29,23,.1)),
+        var(--paper);
+}
+
+.cover-photo {
+    position: absolute;
+    width: 43%;
+    height: 67%;
+    right: 8%;
+    top: 13%;
+    object-fit: cover;
+    filter: sepia(.28) saturate(.82) contrast(.92);
+    border: 10px solid #e7d5b5;
+    box-shadow:
+        0 15px 25px rgba(52,32,24,.35),
+        5px 5px 0 rgba(104,64,44,.15);
+    transform: rotate(2.5deg);
+}
+
+.cover-content {
+    position: absolute;
+    left: 9%;
+    top: 18%;
+    width: 45%;
+    z-index: 5;
+}
+
+.cover-kicker {
+    font-family: "Special Elite", monospace;
+    font-size: 9px;
+    letter-spacing: 4px;
+    margin-bottom: 25px;
+    color: var(--brown);
+}
+
+.cover-title {
+    font-family: "DM Serif Display", serif;
+    font-size: clamp(40px, 6vw, 75px);
+    line-height: .88;
+    color: var(--deep-red);
+}
+
+.cover-title em {
+    display: block;
+    font-family: "Italianno", cursive;
+    font-size: 1.35em;
+    font-weight: normal;
+    margin: 5px 0;
+}
+
+.cover-date {
+    margin-top: 28px;
+    font-family: "Libre Baskerville", serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.cover-stamp {
+    position: absolute;
+    right: 8%;
+    bottom: 8%;
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--deep-red);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: "Special Elite", monospace;
+    font-size: 8px;
+    color: var(--deep-red);
+    transform: rotate(-12deg);
+}
+
+.cover-rose {
+    position: absolute;
+    left: 7%;
+    bottom: 9%;
+    font-size: 55px;
+    transform: rotate(-10deg);
+}
+
+/* =========================
+   LETTER PAGE
+========================= */
+
+.page-02 {
+    background:
+        radial-gradient(circle at 80% 20%, rgba(165,108,79,.13), transparent 20%),
+        var(--paper-light);
+}
+
+.letter-paper {
+    position: absolute;
+    inset: 9% 12%;
+    padding: 55px 70px;
+    background:
+        repeating-linear-gradient(
+            transparent 0 32px,
+            rgba(112,72,58,.08) 33px
+        ),
+        #f4e7cb;
+
+    box-shadow:
+        0 8px 25px rgba(71,42,30,.2),
+        inset 0 0 30px rgba(90,55,38,.08);
+
+    transform: rotate(-.7deg);
+}
+
+.letter-paper h2 {
+    font-family: "Italianno", cursive;
+    font-size: 58px;
+    font-weight: normal;
+    color: var(--deep-red);
+    margin-bottom: 20px;
+}
+
+.letter-paper p {
+    font-size: 18px;
+    line-height: 1.75;
+    margin-bottom: 18px;
+}
+
+.letter-signature {
+    margin-top: 25px;
+    text-align: right;
+    font-family: "Italianno", cursive;
+    font-size: 40px;
+    color: var(--deep-red);
+}
+
+.wax-seal {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    right: 7%;
+    bottom: 7%;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 30%, #bd6664, #752d30 65%, #4d1b1d);
+    color: #e9c9a9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "DM Serif Display", serif;
+    font-size: 24px;
+    box-shadow:
+        3px 6px 10px rgba(0,0,0,.25),
+        inset -4px -4px 8px rgba(0,0,0,.18);
+    transform: rotate(-8deg);
+}
+
+/* =========================
+   CLASSROOM PAGE
+========================= */
+
+.page-03 {
+    background: #dfcfaf;
+}
+
+.classroom-photo {
+    position: absolute;
+    width: 48%;
+    height: 68%;
+    right: 8%;
+    top: 14%;
+    object-fit: cover;
+    border: 12px solid #eee0c4;
+    box-shadow: 0 15px 25px rgba(54,33,25,.35);
+    transform: rotate(2deg);
+    filter: sepia(.4);
+}
+
+.classroom-text {
+    position: absolute;
+    left: 9%;
+    top: 22%;
+    width: 42%;
+    z-index: 3;
+}
+
+.classroom-text h2 {
+    font-family: "DM Serif Display", serif;
+    color: var(--deep-red);
+    font-size: clamp(40px, 6vw, 65px);
+    line-height: .9;
+}
+
+.classroom-text h2 span {
+    display: block;
+    font-family: "Italianno", cursive;
+    font-size: 1.4em;
+    font-weight: normal;
+}
+
+.classroom-text p {
+    margin-top: 25px;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+/* =========================
+   TIMELINE
+========================= */
+
+.timeline {
+    position: absolute;
+    left: 10%;
+    right: 10%;
+    top: 18%;
+    bottom: 12%;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    bottom: 5%;
+    width: 1px;
+    background: var(--brown);
+    opacity: .5;
+}
+
+.timeline-item {
+    position: relative;
+    width: 44%;
+    margin-bottom: 32px;
+}
+
+.timeline-item:nth-child(odd) {
+    text-align: right;
+    margin-right: auto;
+}
+
+.timeline-item:nth-child(even) {
+    margin-left: auto;
+}
+
+.timeline-date {
+    font-family: "Special Elite", monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--deep-red);
+}
+
+.timeline-item h3 {
+    font-family: "DM Serif Display", serif;
+    font-size: 25px;
+    margin: 5px 0;
+}
+
+.timeline-item p {
+    font-size: 15px;
+    line-height: 1.4;
+}
+
+.timeline-dot {
+    position: absolute;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--deep-red);
+    border: 2px solid var(--paper);
+    top: 4px;
+}
+
+.timeline-item:nth-child(odd) .timeline-dot {
+    right: -14%;
+}
+
+.timeline-item:nth-child(even) .timeline-dot {
+    left: -14%;
+}
+
+/* =========================
+   SCRAPBOOK
+========================= */
+
+.scrapbook-title {
+    position: absolute;
+    top: 9%;
+    left: 9%;
+    font-family: "Italianno", cursive;
+    font-size: 55px;
+    color: var(--deep-red);
+}
+
+.scrap-photo {
+    position: absolute;
+    padding: 10px 10px 35px;
+    background: #f7ecd5;
+    box-shadow: 0 12px 20px rgba(49,31,24,.3);
+}
+
+.scrap-photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(.3) saturate(.85);
+}
+
+.scrap-photo:nth-child(1) {
+    width: 28%;
+    height: 40%;
+    top: 19%;
+    left: 10%;
+    transform: rotate(-6deg);
+}
+
+.scrap-photo:nth-child(2) {
+    width: 31%;
+    height: 42%;
+    top: 17%;
+    left: 39%;
+    transform: rotate(4deg);
+}
+
+.scrap-photo:nth-child(3) {
+    width: 27%;
+    height: 39%;
+    right: 8%;
+    top: 22%;
+    transform: rotate(-3deg);
+}
+
+.scrap-photo:nth-child(4) {
+    width: 32%;
+    height: 41%;
+    left: 20%;
+    bottom: 7%;
+    transform: rotate(5deg);
+}
+
+.scrap-note {
+    position: absolute;
+    right: 11%;
+    bottom: 8%;
+    width: 28%;
+    padding: 15px;
+    background: #d8bd8e;
+    font-family: "Italianno", cursive;
+    font-size: 28px;
+    line-height: 1;
+    transform: rotate(-5deg);
+    box-shadow: 4px 6px 12px rgba(45,28,20,.2);
+}
+
+/* tape */
+
+.tape {
+    position: absolute;
+    width: 95px;
+    height: 28px;
+    background: rgba(214,184,137,.65);
+    z-index: 8;
+    transform: rotate(-7deg);
+    box-shadow: 0 2px 5px rgba(0,0,0,.08);
+}
+
+/* =========================
+   THINGS I LOVE
+========================= */
+
+.love-list-title {
+    text-align: center;
+    font-family: "Italianno", cursive;
+    font-size: 65px;
+    color: var(--deep-red);
+    margin-top: 6%;
+}
+
+.love-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px 45px;
+    width: 75%;
+    margin: 35px auto;
+}
+
+.love-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed rgba(112,72,58,.4);
+}
+
+.love-number {
+    font-family: "Special Elite", monospace;
+    font-size: 10px;
+    color: var(--deep-red);
+}
+
+.love-item span:last-child {
+    font-size: 18px;
+}
+
+/* =========================
+   VIDEO MEMORIES
+========================= */
+
+.video-title {
+    text-align: center;
+    font-family: "DM Serif Display", serif;
+    font-size: 45px;
+    color: var(--deep-red);
+    margin-top: 7%;
+}
+
+.video-subtitle {
+    text-align: center;
+    margin-top: 7px;
+    font-family: "Italianno", cursive;
+    font-size: 32px;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+    width: 76%;
+    margin: 35px auto 0;
+}
+
+.video-card {
+    position: relative;
+    padding: 12px 12px 25px;
+    background: #f2e4c9;
+    box-shadow: 0 10px 20px rgba(53,31,24,.25);
+    transform: rotate(-1deg);
+}
+
+.video-card:nth-child(2) {
+    transform: rotate(1.5deg);
+}
+
+.video-card video {
+    display: block;
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    background: #241714;
+    filter: sepia(.18);
+}
+
+.video-label {
+    display: block;
+    margin-top: 8px;
+    text-align: center;
+    font-family: "Special Elite", monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+/* =========================
+   CONTACT SHEET
+========================= */
+
+.contact-title {
+    text-align: center;
+    font-family: "Italianno", cursive;
+    color: var(--deep-red);
+    font-size: 65px;
+    margin-top: 5%;
+}
+
+.contact-sheet {
+    width: 80%;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 7px;
+    padding: 15px;
+    background: #2e2924;
+    box-shadow: 0 15px 25px rgba(0,0,0,.3);
+}
+
+.contact-sheet img {
+    width: 100%;
+    aspect-ratio: 1 / 1.25;
+    object-fit: cover;
+    filter: sepia(.5) grayscale(.1);
+    border: 2px solid #f1dfbd;
+}
+
+.contact-caption {
+    text-align: center;
+    font-family: "Special Elite", monospace;
+    font-size: 9px;
+    letter-spacing: 3px;
+}
+
+/* =========================
+   SOUNDTRACK
+========================= */
+
+.soundtrack-title {
+    text-align: center;
+    font-family: "DM Serif Display", serif;
+    font-size: 52px;
+    color: var(--deep-red);
+    margin-top: 7%;
+}
+
+.soundtrack-subtitle {
+    text-align: center;
+    font-family: "Italianno", cursive;
+    font-size: 33px;
+    margin-top: -3px;
+}
+
+.song-list {
+    width: 70%;
+    margin: 35px auto;
+}
+
+.song {
+    display: grid;
+    grid-template-columns: 55px 1fr;
+    gap: 15px;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(112,72,58,.35);
+}
+
+.song-number {
+    font-family: "Special Elite", monospace;
+    color: var(--deep-red);
+}
+
+.song-title {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.song audio {
+    width: 100%;
+    height: 28px;
+}
+
+/* =========================
+   SPECIAL MEMORY
+========================= */
+
+.special-memory {
+    position: absolute;
+    inset: 0;
+}
+
+.special-photo {
+    position: absolute;
+    width: 45%;
+    height: 66%;
+    left: 9%;
+    top: 15%;
+    object-fit: cover;
+    padding: 12px 12px 45px;
+    background: #f4e6ca;
+    box-shadow: 0 20px 30px rgba(50,30,22,.3);
+    transform: rotate(-3deg);
+    filter: sepia(.3);
+}
+
+.special-text {
+    position: absolute;
+    width: 38%;
+    right: 8%;
+    top: 27%;
+}
+
+.special-text .quote-mark {
+    font-family: Georgia, serif;
+    font-size: 90px;
+    line-height: .3;
+    color: var(--rose);
+}
+
+.special-text p {
+    font-family: "Italianno", cursive;
+    font-size: 43px;
+    line-height: 1.1;
+    color: var(--deep-red);
+}
+
+.special-date {
+    margin-top: 20px;
+    font-family: "Special Elite", monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery-title {
+    text-align: center;
+    font-family: "Italianno", cursive;
+    color: var(--deep-red);
+    font-size: 65px;
+    margin-top: 4%;
+}
+
+.gallery {
+    width: 82%;
+    height: 72%;
+    margin: 15px auto 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.gallery-photo {
+    background: #f5e7ca;
+    padding: 7px;
+    box-shadow: 0 8px 15px rgba(46,29,23,.25);
+}
+
+.gallery-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(.25);
+}
+
+.gallery-photo:nth-child(1) { transform: rotate(-2deg); }
+.gallery-photo:nth-child(2) { transform: rotate(1deg); }
+.gallery-photo:nth-child(3) { transform: rotate(-1deg); }
+.gallery-photo:nth-child(4) { transform: rotate(2deg); }
+.gallery-photo:nth-child(5) { transform: rotate(-2deg); }
+
+/* =========================
+   FINAL VIDEOS
+========================= */
+
+.page-12 .video-grid {
+    width: 78%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.page-12 .video-card {
+    padding: 8px 8px 20px;
+}
+
+.page-12 .video-card video {
+    height: 240px;
+}
+
+/* =========================
+   FINAL LETTER
+========================= */
+
+.final-letter {
+    width: 76%;
+    height: 72%;
+    margin: 8% auto 0;
+    padding: 45px 60px;
+    background:
+        repeating-linear-gradient(
+            transparent 0 34px,
+            rgba(112,72,58,.09) 35px
+        ),
+        #f4e7cb;
+    box-shadow:
+        0 15px 25px rgba(50,30,23,.2),
+        inset 0 0 35px rgba(95,58,39,.1);
+    transform: rotate(.7deg);
+}
+
+.final-letter h2 {
+    font-family: "Italianno", cursive;
+    font-size: 62px;
+    font-weight: normal;
+    color: var(--deep-red);
+    margin-bottom: 15px;
+}
+
+.final-letter p {
+    font-size: 17px;
+    line-height: 1.65;
+    margin-bottom: 13px;
+}
+
+.final-signature {
+    text-align: right;
+    font-family: "Italianno", cursive;
+    font-size: 44px;
+    color: var(--deep-red);
+    margin-top: 15px;
+}
+
+/* =========================
+   BACK COVER
+========================= */
+
+.page-14 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background:
+        radial-gradient(circle at center, rgba(180,122,89,.14), transparent 45%),
+        #dbc39e;
+}
+
+.back-cover-content h2 {
+    font-family: "Italianno", cursive;
+    font-size: 90px;
+    font-weight: normal;
+    color: var(--deep-red);
+}
+
+.back-cover-content p {
+    font-family: "Special Elite", monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    margin-top: 20px;
+}
+
+.back-initials {
+    margin-top: 35px;
+    font-family: "DM Serif Display", serif;
+    font-size: 35px;
+    color: var(--deep-red);
+}
+
+/* =========================
+   DECORATIONS
+========================= */
+
+.flower {
+    position: absolute;
+    font-size: 45px;
+    opacity: .55;
+    z-index: 4;
+}
+
+.flower.one {
+    top: 6%;
+    right: 7%;
+    transform: rotate(15deg);
+}
+
+.flower.two {
+    bottom: 6%;
+    left: 6%;
+    transform: rotate(-25deg);
+}
+
+.pressed-flower {
+    position: absolute;
+    width: 80px;
+    height: 120px;
+    opacity: .4;
+    pointer-events: none;
+}
+
+.paper-clip {
+    position: absolute;
+    width: 17px;
+    height: 65px;
+    border: 2px solid #77706a;
+    border-radius: 12px;
+    transform: rotate(10deg);
+    z-index: 15;
+}
+
+/* =========================
+   MAGAZINE CONTROLS
+========================= */
+
+.magazine-controls {
+    position: fixed;
+    left: 50%;
+    bottom: 17px;
+    transform: translateX(-50%);
+    z-index: 6000;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 8px 14px;
+    background: rgba(35,22,18,.82);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(238,220,185,.25);
+    border-radius: 3px;
+}
+
+.magazine-controls button {
+    width: 36px;
+    height: 30px;
+    border: 0;
+    background: transparent;
+    color: #ead9bb;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.magazine-controls button:hover {
+    color: #fff;
+    transform: scale(1.15);
+}
+
+.page-counter {
+    min-width: 58px;
+    text-align: center;
+    color: #ead9bb;
+    font-family: "Special Elite", monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+
+.swipe-hint {
+    position: fixed;
+    bottom: 4px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(240,220,190,.65);
+    font-family: "Special Elite", monospace;
+    font-size: 8px;
+    letter-spacing: 2px;
+    z-index: 6000;
+}
+
+/* =========================
+   IMAGE EFFECTS
+========================= */
+
+img {
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.page img {
+    transition: filter .4s ease;
+}
+
+.page img:hover {
+    filter: sepia(.2) saturate(.95) contrast(.98);
+}
+
+/* =========================
+   AUDIO
+========================= */
+
+audio {
+    accent-color: var(--deep-red);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    body {
+        overflow: hidden;
+    }
+
+    .opening-card {
+        min-height: 560px;
+        padding: 55px 28px;
+    }
+
+    .opening-card h1 {
+        font-size: 85px;
+    }
+
+    .opening-description {
+        font-size: 16px;
+    }
+
+    .magazine {
+        padding: 10px;
+    }
+
+    .book {
+        width: 94vw;
+        height: 76vh;
+        min-height: 500px;
+    }
+
+    .page-inner {
+        padding: 35px;
+    }
+
+    .page::before {
+        inset: 10px;
+    }
+
+    .page::after {
+        inset: 15px;
+    }
+
+    /* cover */
+
+    .cover-photo {
+        width: 48%;
+        height: 52%;
+        right: 7%;
+        top: 28%;
+    }
+
+    .cover-content {
+        top: 13%;
+        left: 8%;
+        width: 65%;
+    }
+
+    .cover-title {
+        font-size: 39px;
+    }
+
+    .cover-title em {
+        font-size: 1.5em;
+    }
+
+    .cover-stamp {
+        width: 60px;
+        height: 60px;
+        font-size: 7px;
+        bottom: 8%;
+    }
+
+    /* letter */
+
+    .letter-paper {
+        inset: 9% 8%;
+        padding: 35px 30px;
+    }
+
+    .letter-paper h2 {
+        font-size: 45px;
+    }
+
+    .letter-paper p {
+        font-size: 14px;
+        line-height: 1.55;
+        margin-bottom: 12px;
+    }
+
+    .letter-signature {
+        font-size: 32px;
+    }
+
+    .wax-seal {
+        width: 52px;
+        height: 52px;
+        font-size: 17px;
+    }
+
+    /* classroom */
+
+    .classroom-photo {
+        width: 48%;
+        height: 52%;
+        top: 34%;
+    }
+
+    .classroom-text {
+        top: 13%;
+        left: 8%;
+        width: 65%;
+    }
+
+    .classroom-text h2 {
+        font-size: 38px;
+    }
+
+    .classroom-text p {
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    /* timeline */
+
+    .timeline {
+        left: 8%;
+        right: 8%;
+        top: 15%;
+    }
+
+    .timeline-item {
+        margin-bottom: 24px;
+    }
+
+    .timeline-item h3 {
+        font-size: 18px;
+    }
+
+    .timeline-item p {
+        font-size: 12px;
+    }
+
+    /* scrapbook */
+
+    .scrapbook-title {
+        font-size: 43px;
+        top: 8%;
+    }
+
+    .scrap-photo {
+        padding: 6px 6px 22px;
+    }
+
+    .scrap-note {
+        font-size: 18px;
+    }
+
+    /* love list */
+
+    .love-list-title {
+        font-size: 48px;
+        margin-top: 9%;
+    }
+
+    .love-grid {
+        width: 82%;
+        gap: 12px 20px;
+        margin-top: 25px;
+    }
+
+    .love-item {
+        gap: 7px;
+    }
+
+    .love-item span:last-child {
+        font-size: 12px;
+    }
+
+    /* videos */
+
+    .video-title {
+        font-size: 34px;
+        margin-top: 8%;
+    }
+
+    .video-subtitle {
+        font-size: 25px;
+    }
+
+    .video-grid {
+        width: 82%;
+        gap: 12px;
+        margin-top: 20px;
+    }
+
+    .video-card {
+        padding: 6px 6px 15px;
+    }
+
+    .video-card video {
+        height: 150px;
+    }
+
+    .video-label {
+        font-size: 7px;
+    }
+
+    /* contact sheet */
+
+    .contact-title {
+        font-size: 48px;
+    }
+
+    .contact-sheet {
+        width: 82%;
+        gap: 4px;
+        padding: 8px;
+        margin-top: 20px;
+    }
+
+    .contact-caption {
+        font-size: 7px;
+    }
+
+    /* soundtrack */
+
+    .soundtrack-title {
+        font-size: 37px;
+    }
+
+    .soundtrack-subtitle {
+        font-size: 25px;
+    }
+
+    .song-list {
+        width: 82%;
+        margin-top: 20px;
+    }
+
+    .song {
+        grid-template-columns: 35px 1fr;
+        padding: 12px 0;
+    }
+
+    .song-title {
+        font-size: 14px;
+    }
+
+    .song audio {
+        height: 24px;
+    }
+
+    /* special */
+
+    .special-photo {
+        width: 45%;
+        height: 50%;
+        top: 25%;
+    }
+
+    .special-text {
+        width: 39%;
+        top: 27%;
+    }
+
+    .special-text p {
+        font-size: 28px;
+    }
+
+    .special-text .quote-mark {
+        font-size: 55px;
+    }
+
+    .special-date {
+        font-size: 7px;
+    }
+
+    /* gallery */
+
+    .gallery-title {
+        font-size: 48px;
+    }
+
+    .gallery {
+        width: 84%;
+        height: 67%;
+        gap: 7px;
+    }
+
+    /* final videos */
+
+    .page-12 .video-grid {
+        width: 84%;
+        gap: 7px;
+    }
+
+    .page-12 .video-card video {
+        height: 170px;
+    }
+
+    /* final letter */
+
+    .final-letter {
+        width: 82%;
+        height: 70%;
+        margin-top: 10%;
+        padding: 28px 25px;
+    }
+
+    .final-letter h2 {
+        font-size: 45px;
+    }
+
+    .final-letter p {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .final-signature {
+        font-size: 32px;
+    }
+
+    /* back */
+
+    .back-cover-content h2 {
+        font-size: 68px;
+    }
+
+    .back-cover-content p {
+        font-size: 7px;
+        letter-spacing: 2px;
+    }
+
+    /* controls */
+
+    .magazine-controls {
+        bottom: 12px;
+        gap: 8px;
+    }
+
+    .magazine-controls button {
+        width: 32px;
+        font-size: 17px;
+    }
+
+    .swipe-hint {
+        display: none;
+    }
+}
+
+/* =========================
+   VERY SMALL PHONES
+========================= */
+
+@media (max-width: 400px) {
+
+    .book {
+        height: 72vh;
+    }
+
+    .opening-card {
+        min-height: 520px;
+    }
+
+    .opening-card h1 {
+        font-size: 72px;
+    }
+
+    .cover-title {
+        font-size: 32px;
+    }
+
+    .classroom-text h2 {
+        font-size: 31px;
+    }
+
+    .page-12 .video-card video {
+        height: 135px;
+    }
+
+    .final-letter p {
+        font-size: 12px;
+    }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}
